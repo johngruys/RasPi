@@ -1,7 +1,7 @@
 import pygame as py
 import random
 
-print("Working?")
+print("Working.")
 
 
 py.init()
