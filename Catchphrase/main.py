@@ -1,8 +1,6 @@
 import pygame as py
 import random
 
-print("Check")
-
 py.init()
 
 running = True
