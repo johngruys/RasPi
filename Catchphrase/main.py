@@ -1,6 +1,8 @@
 import pygame as py
 import random
 
+print("Check")
+
 py.init()
 
 running = True
@@ -23,7 +25,6 @@ while running:
     hello_disp = hello_font.render(hello, True, white)
     screen.blit(hello_disp, (50, 50))
 
-    print("Updated File")
     
     
     for event in py.event.get():
