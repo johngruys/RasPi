@@ -3,7 +3,6 @@ import random
 
 print("Working.")
 
-
 py.init()
 
 running = True
