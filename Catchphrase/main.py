@@ -3,25 +3,25 @@ import sqlite3
 import random
 import time
 from gpiozero import Button
-from pynput import keyboard
+from pynput.keyboard import Key, Controller
 
 ### Button input for pi
-# keyboard = Controller()
+keyboard = Controller()
 
-# def s():
-#      print("s")
-#      keyboard.press("s")
-#      keyboard.release("s")
+def s():
+     print("s")
+     keyboard.press("s")
+     keyboard.release("s")
      
-# def c():
-#     print("c")
-#     keyboard.press("c")
-#     keyboard.release("c")
+def c():
+    print("c")
+    keyboard.press("c")
+    keyboard.release("c")
     
-# def n():
-#     print("n")
-#     keyboard.press("n")
-#     keyboard.release("n")
+def n():
+    print("n")
+    keyboard.press("n")
+    keyboard.release("n")
      
 # ss = Button(20)
 # ss.when_pressed = s
