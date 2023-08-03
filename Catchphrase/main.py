@@ -3,38 +3,6 @@ import sqlite3
 import random
 import time
 from gpiozero import Button
-from pynput.keyboard import Key, Controller
-
-### Button input for pi
-keyboard = Controller()
-
-def s():
-     print("s")
-     keyboard.press("s")
-     keyboard.release("s")
-     
-def c():
-    print("c")
-    keyboard.press("c")
-    keyboard.release("c")
-    
-def n():
-    print("n")
-    keyboard.press("n")
-    keyboard.release("n")
-     
-# ss = Button(20)
-# ss.when_pressed = s
-# ss.when_released = s
-
-# cat = Button(26)
-# cat.when_pressed = c
-# cat.when_released = c
-
-# ne = Button(12)
-# ne.when_pressed = n
-# ne.when_released = n
-
 
 ### Initialize
 py.init()
@@ -84,6 +52,38 @@ def next_cat():
 
 
 
+### Event Handling for Testing (Comment on PI)    
+def handle_events():
+    for event in py.event.get():
+        if event.type == py.QUIT:
+            running = False
+            return False
+
+        if event.type == py.KEYDOWN:
+            if event.key == py.K_s:
+                ...
+            elif event.key == py.K_c:
+                next_cat()
+            elif event.key == py.K_n:
+                ...
+    return True
+    
+
+### Event Handling
+
+# ss = Button(20)
+# ss.when_pressed = s
+# ss.when_released = s
+
+# cat = Button(26)
+# cat.when_pressed = next_cat
+# cat.when_released = next_cat
+
+# ne = Button(12)
+# ne.when_pressed = n
+# ne.when_released = n
+
+
 while running:
 
     ### Reset Screen
@@ -95,33 +95,19 @@ while running:
         category_disp = category_font.render(category, True, white)
         screen.blit(category_disp, (177, 130))
               
-        
-
-    
-    # hello = "hello"
-    # hello_font = py.font.Font("freesansbold.ttf", 35)
-    # hello_disp = hello_font.render(hello, True, white)
-    # screen.blit(hello_disp, (50, 50))
 
     
     
-    for event in py.event.get():
-        ### Input Checking
-        if event.type == py.QUIT:
-            running = False
-
-        if event.type == py.KEYDOWN:
-            if event.key == py.K_s:
-                ...
-            elif event.key == py.K_c:
-                next_cat()
-            elif event.key == py.K_n:
-                ...
-
     
+    ### Uncomment for testing
+    if not handle_events():
+        break
             
     py.display.update()
-            
+
+
+
+### Closes when loop exits   
 py.quit()
     
 
