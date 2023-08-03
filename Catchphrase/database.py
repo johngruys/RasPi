@@ -10,6 +10,7 @@ x = """1. Los Angeles: What city is nicknamed the City of Angels?
 def contains_chars(input_string, chars_to_check):
     return any(char in input_string for char in chars_to_check)
 
+### For quizlet format
 def extract_terms(str):
     terms = []
     list = str.splitlines()
@@ -25,13 +26,13 @@ def extract_terms(str):
                 tmp_term += " " + j[:len(j) - 1]
                 terms.append(tmp_term.strip())
         
-
     return terms
 
 
 
 
 
+### Database interaction
 
 def create_connection(db_file):
     connection = None
@@ -48,7 +49,7 @@ def check_category(connection, category):
 
     # get all table names
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    tables = cursor.fetchall();
+    tables = cursor.fetchall()
     categories = []
     for cat in tables:
         categories += cat
@@ -57,8 +58,6 @@ def check_category(connection, category):
     if category not in categories:
         cursor.execute("CREATE TABLE " + category + " (word TEXT);")
     
-
-
 def insert_word(connection, category, word):
 
     # see if category exists
@@ -76,23 +75,25 @@ def insert_word(connection, category, word):
     
 
 
-
-
-
-
 def main():
     database_name = "words.db"
-    category_name = "cat1"
+    category_name = "TESTCAT1"
     
-    # for data scraped from quizlet
+    ### For data scraped from quizlet
     str = """
 
 
     """
+
+    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/Random.txt", "r")
+    x = file1.read()
+    words = extract_terms(x)
     
     connection = create_connection(database_name)
-    # call insert_word for each term
-    insert_word(connection, category_name, "test1")
+
+    ### call insert_word for each term
+    for i in range(len(words)):
+        insert_word(connection, category_name, words[i])
 
 
 
@@ -101,6 +102,6 @@ def main():
         connection.close()
 
 
-        
+
 if __name__ == '__main__':
     main()
