@@ -20,7 +20,10 @@ black = (0, 0, 0)
 def create_connection(db_file):
     connection = None
     try:
-        connection = sqlite3.connect("Catchphrase/" + db_file)
+        ### Connection for testing
+#         connection = sqlite3.connect("Catchphrase/" + db_file)
+        ### Connection for PI
+        connection = sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file)
     except:
         print("Failed to connect")
 
@@ -53,33 +56,33 @@ def next_cat():
 
 
 ### Event Handling for Testing (Comment on PI)    
-def handle_events():
-    for event in py.event.get():
-        if event.type == py.QUIT:
-            running = False
-            return False
-
-        if event.type == py.KEYDOWN:
-            if event.key == py.K_s:
-                ...
-            elif event.key == py.K_c:
-                next_cat()
-            elif event.key == py.K_n:
-                ...
-    return True
+# def handle_events():
+#     for event in py.event.get():
+#         if event.type == py.QUIT:
+#             running = False
+#             return False
+# 
+#         if event.type == py.KEYDOWN:
+#             if event.key == py.K_s:
+#                 ...
+#             elif event.key == py.K_c:
+#                 next_cat()
+#             elif event.key == py.K_n:
+#                 ...
+#     return True
     
 
 ### Event Handling
 
-# ss = Button(20)
+ss = Button(20)
 # ss.when_pressed = s
 # ss.when_released = s
 
-# cat = Button(26)
-# cat.when_pressed = next_cat
-# cat.when_released = next_cat
+cat = Button(26)
+cat.when_pressed = next_cat
+cat.when_released = next_cat
 
-# ne = Button(12)
+ne = Button(12)
 # ne.when_pressed = n
 # ne.when_released = n
 
@@ -100,8 +103,8 @@ while running:
     
     
     ### Uncomment for testing
-    if not handle_events():
-        break
+#     if not handle_events():
+#         break
             
     py.display.update()
 
