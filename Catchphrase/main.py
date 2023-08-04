@@ -58,6 +58,7 @@ def next_cat():
 
 ### To be set when start button pressed
 num_words = 0
+current_word = "hi"
 
 running = False
 def start_stop():
@@ -69,6 +70,7 @@ def start_stop():
         running = True
         cursor.execute("SELECT COUNT(*) AS total_items FROM " + categories[current_cat])
         num_words = cursor.fetchall()[0][0]
+        skip()
 
         ### Start timer
 
@@ -81,16 +83,15 @@ def next_word():
     global ids_used
     if num_words > 0:
         while True:
-            print("HI")
             rand_id = random.randint(0, num_words - 1)
             if rand_id not in ids_used:
                 ids_used.append(rand_id)
                 print(rand_id)
                 cursor.execute("SELECT word FROM " + categories[current_cat] + " WHERE id = " + str(rand_id))
                 word = cursor.fetchall()
-                return word
+                return word[0][0]
 
-current_word = "hi"
+
 def skip():
     if running:
         global current_word
