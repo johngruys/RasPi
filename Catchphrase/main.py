@@ -54,10 +54,6 @@ def next_cat():
         else:
             current_cat = 0
 
-ids_used = []
-def next_word():
-    pass
-    
 
 
 ### To be set when start button pressed
@@ -67,18 +63,38 @@ running = False
 def start_stop():
     global running
     global selecting
+    global num_words
     if running == False:
         selecting = False
         running = True
         cursor.execute("SELECT COUNT(*) AS total_items FROM " + categories[current_cat])
         num_words = cursor.fetchall()[0][0]
-        print(num_words)
 
         ### Start timer
 
     elif running == True:
         selecting = True
         running = False
+
+ids_used = []
+def next_word():
+    global ids_used
+    if num_words > 0:
+        while True:
+            print("HI")
+            rand_id = random.randint(0, num_words - 1)
+            if rand_id not in ids_used:
+                ids_used.append(rand_id)
+                print(rand_id)
+                cursor.execute("SELECT word FROM " + categories[current_cat] + " WHERE id = " + str(rand_id))
+                word = cursor.fetchall()
+                return word
+
+current_word = "hi"
+def skip():
+    if running:
+        global current_word
+        current_word = next_word()
 
 
 
@@ -98,7 +114,7 @@ def handle_events():
             elif event.key == py.K_c:
                 next_cat()
             elif event.key == py.K_n:
-                ...
+                skip()
     return True
     
 
@@ -129,7 +145,9 @@ while game_on:
         screen.blit(category_disp, (177, 130))
 
     if running == True:
-        pass
+        word_font = py.font.Font("freesansbold.ttf", 35)
+        word_disp = word_font.render(current_word, True, white)
+        screen.blit(word_disp, (177, 130))
 
 
               

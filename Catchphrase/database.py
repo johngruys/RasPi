@@ -1,4 +1,5 @@
 import sqlite3
+import random
 
 x = """1. Los Angeles: What city is nicknamed the City of Angels?
 2. Las Vegas: What city is nicknamed Sin City?
@@ -56,7 +57,7 @@ def check_category(connection, category):
 
     # check if category exists, create if not
     if category not in categories:
-        cursor.execute("CREATE TABLE " + category + " (word TEXT);")
+        cursor.execute("CREATE TABLE " + category + " (id INTEGER PRIMARY KEY, word TEXT);")
     
 def insert_word(connection, category, word):
 
@@ -77,7 +78,7 @@ def insert_word(connection, category, word):
 
 def main():
     database_name = "words.db"
-    category_name = "TESTCAT1"
+    category_name = "Random"
     
     ### For data scraped from quizlet
     str = """
@@ -85,19 +86,21 @@ def main():
 
     """
 
-    # file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/Random.txt", "r")
-    # x = file1.read()
-    # words = extract_terms(x)
+    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/Random.txt", "r")
+    x = file1.read()
+    words = extract_terms(x)
     
     connection = create_connection(database_name)
     cursor = connection.cursor()
-    cursor.execute("SELECT COUNT(*) AS total_items FROM TESTCAT1")
-    len = cursor.fetchall()
-    print(int(len[0][0]))
+    # cursor.execute("SELECT COUNT(*) AS total_items FROM TESTCAT1")
+    # len = cursor.fetchall()
+    # print(int(len[0][0]))
+
+
 
     # ### call insert_word for each term
-    # for i in range(len(words)):
-    #     insert_word(connection, category_name, words[i])
+    for i in range(len(words)):
+        insert_word(connection, category_name, words[i])
 
 
 
