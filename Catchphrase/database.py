@@ -85,15 +85,21 @@ def main():
 
     """
 
-    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/Random.txt", "r")
-    x = file1.read()
-    words = extract_terms(x)
+    # file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/Random.txt", "r")
+    # x = file1.read()
+    # words = extract_terms(x)
     
     connection = create_connection(database_name)
+    cursor = connection.cursor()
+    cursor.execute("SELECT COUNT(*) AS total_items FROM TESTCAT1")
+    len = cursor.fetchall()
+    print(int(len[0][0]))
 
-    ### call insert_word for each term
-    for i in range(len(words)):
-        insert_word(connection, category_name, words[i])
+    # ### call insert_word for each term
+    # for i in range(len(words)):
+    #     insert_word(connection, category_name, words[i])
+
+
 
 
 

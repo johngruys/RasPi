@@ -11,7 +11,7 @@ screen = py.display.set_mode((480, 320))
 
 py.display.set_caption("Catchprase 2.0")
 
-running = True
+game_on = True
 
 # Colors #
 white = (255, 255, 255)
@@ -21,9 +21,9 @@ def create_connection(db_file):
     connection = None
     try:
         ### Connection for testing
-#         connection = sqlite3.connect("Catchphrase/" + db_file)
+        connection = sqlite3.connect("Catchphrase/" + db_file)
         ### Connection for PI
-        connection = sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file)
+        # connection = sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file)
     except:
         print("Failed to connect")
 
@@ -48,46 +48,76 @@ current_cat = 0
 
 def next_cat():
     global current_cat
-    if current_cat < num_cat - 1:
-        current_cat += 1
-    else:
-        current_cat = 0
+    if selecting == True:
+        if current_cat < num_cat - 1:
+            current_cat += 1
+        else:
+            current_cat = 0
+
+ids_used = []
+def next_word():
+    pass
+    
+
+
+### To be set when start button pressed
+num_words = 0
+
+running = False
+def start_stop():
+    global running
+    global selecting
+    if running == False:
+        selecting = False
+        running = True
+        cursor.execute("SELECT COUNT(*) AS total_items FROM " + categories[current_cat])
+        num_words = cursor.fetchall()[0][0]
+        print(num_words)
+
+        ### Start timer
+
+    elif running == True:
+        selecting = True
+        running = False
+
+
+
 
 
 
 ### Event Handling for Testing (Comment on PI)    
-# def handle_events():
-#     for event in py.event.get():
-#         if event.type == py.QUIT:
-#             running = False
-#             return False
-# 
-#         if event.type == py.KEYDOWN:
-#             if event.key == py.K_s:
-#                 ...
-#             elif event.key == py.K_c:
-#                 next_cat()
-#             elif event.key == py.K_n:
-#                 ...
-#     return True
+def handle_events():
+    for event in py.event.get():
+        if event.type == py.QUIT:
+            game_on = False
+            return False
+
+        if event.type == py.KEYDOWN:
+            if event.key == py.K_s:
+                start_stop()
+            elif event.key == py.K_c:
+                next_cat()
+            elif event.key == py.K_n:
+                ...
+    return True
     
 
 ### Event Handling
 
-ss = Button(20)
-# ss.when_pressed = s
-# ss.when_released = s
+# ss = Button(20)
+# ss.when_pressed = start_stop
+# ss.when_released = start_stop
 
-cat = Button(26)
-cat.when_pressed = next_cat
-cat.when_released = next_cat
+# cat = Button(26)
+# cat.when_pressed = next_cat
+# cat.when_released = next_cat
 
-ne = Button(12)
+# ne = Button(12)
 # ne.when_pressed = n
 # ne.when_released = n
 
 
-while running:
+while game_on:
 
     ### Reset Screen
     screen.fill(black)
@@ -97,19 +127,24 @@ while running:
         category_font = py.font.Font("freesansbold.ttf", 35)
         category_disp = category_font.render(category, True, white)
         screen.blit(category_disp, (177, 130))
+
+    if running == True:
+        pass
+
+
               
 
     
     
     
     ### Uncomment for testing
-#     if not handle_events():
-#         break
+    if not handle_events():
+        break
             
     py.display.update()
 
 
-
+ 
 ### Closes when loop exits   
 py.quit()
     
