@@ -141,8 +141,8 @@ cat.when_pressed = next_cat
 cat.when_released = next_cat
 
 ne = Button(12)
-ne.when_pressed = n
-ne.when_released = n
+ne.when_pressed = skip
+ne.when_released = skip
 
 
 while game_on:
