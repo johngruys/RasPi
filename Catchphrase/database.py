@@ -1,13 +1,6 @@
 import sqlite3
 import random
 
-x = """1. Los Angeles: What city is nicknamed the City of Angels?
-2. Las Vegas: What city is nicknamed Sin City?
-3. Chicago: What city is nicknamed the Windy City?
-4. New York City: What city is nicknamed the Big Apple?
-5. California: What state is nicknamed the Golden State?"""
-
-
 def contains_chars(input_string, chars_to_check):
     return any(char in input_string for char in chars_to_check)
 
@@ -77,8 +70,8 @@ def insert_word(connection, category, word):
 
 
 def main():
-    database_name = "words.db"
-    category_name = "Random"
+    database_name = "first_database.db"
+    category_name = "Celebrities"
     
     ### For data scraped from quizlet
     str = """
@@ -86,24 +79,16 @@ def main():
 
     """
 
-    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/Random.txt", "r")
+    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/Celebrities.txt", "r")
     x = file1.read()
     words = extract_terms(x)
     
     connection = create_connection(database_name)
-    cursor = connection.cursor()
-    # cursor.execute("SELECT COUNT(*) AS total_items FROM TESTCAT1")
-    # len = cursor.fetchall()
-    # print(int(len[0][0]))
-
 
 
     # ### call insert_word for each term
     for i in range(len(words)):
         insert_word(connection, category_name, words[i])
-
-
-
 
 
     ### Close connection

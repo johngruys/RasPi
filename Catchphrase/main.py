@@ -7,30 +7,36 @@ from gpiozero import Button
 ### Initialize
 py.init()
 
-screen = py.display.set_mode((480, 320))
+screen = py.display.set_mode((0, 0), py.FULLSCREEN)
 
 py.display.set_caption("Catchprase 2.0")
 
 game_on = True
 
+width = screen.get_width();
+height = screen.get_height();
+
 # Colors #
 white = (255, 255, 255)
 black = (0, 0, 0)
+
+# Font
+font = py.font.Font("freesansbold.ttf", 35)
 
 def create_connection(db_file):
     connection = None
     try:
         ### Connection for testing
-        connection = sqlite3.connect("Catchphrase/" + db_file)
+        # connection = sqlite3.connect("Catchphrase/" + db_file)
         ### Connection for PI
-        # connection = sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file)
+        connection = sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file)
     except:
         print("Failed to connect")
 
     return connection
 
 ### Access Database
-database_name = "words.db"
+database_name = "first_database.db"
 connection = create_connection(database_name)
 cursor = connection.cursor()
 
@@ -86,7 +92,6 @@ def next_word():
             rand_id = random.randint(0, num_words - 1)
             if rand_id not in ids_used:
                 ids_used.append(rand_id)
-                print(rand_id)
                 cursor.execute("SELECT word FROM " + categories[current_cat] + " WHERE id = " + str(rand_id))
                 word = cursor.fetchall()
                 return word[0][0]
@@ -98,40 +103,46 @@ def skip():
         current_word = next_word()
 
 
+### Function for writing the words
+def write(text, color):
+    rendered = font.render(text, True, py.Color(color))
+    rectangle = rendered.get_rect(center=(width/2, height/2))
+    return rendered, rectangle
+
 
 
 
 
 ### Event Handling for Testing (Comment on PI)    
-def handle_events():
-    for event in py.event.get():
-        if event.type == py.QUIT:
-            game_on = False
-            return False
+# def handle_events():
+#     for event in py.event.get():
+#         if event.type == py.QUIT:
+#             game_on = False
+#             return False
 
-        if event.type == py.KEYDOWN:
-            if event.key == py.K_s:
-                start_stop()
-            elif event.key == py.K_c:
-                next_cat()
-            elif event.key == py.K_n:
-                skip()
-    return True
+#         if event.type == py.KEYDOWN:
+#             if event.key == py.K_s:
+#                 start_stop()
+#             elif event.key == py.K_c:
+#                 next_cat()
+#             elif event.key == py.K_n:
+#                 skip()
+#     return True
     
 
 ### Event Handling
 
-# ss = Button(20)
-# ss.when_pressed = start_stop
-# ss.when_released = start_stop
+ss = Button(20)
+ss.when_pressed = start_stop
+ss.when_released = start_stop
 
-# cat = Button(26)
-# cat.when_pressed = next_cat
-# cat.when_released = next_cat
+cat = Button(26)
+cat.when_pressed = next_cat
+cat.when_released = next_cat
 
-# ne = Button(12)
-# ne.when_pressed = n
-# ne.when_released = n
+ne = Button(12)
+ne.when_pressed = n
+ne.when_released = n
 
 
 while game_on:
@@ -141,14 +152,12 @@ while game_on:
 
     if selecting == True:
         category = categories[current_cat]
-        category_font = py.font.Font("freesansbold.ttf", 35)
-        category_disp = category_font.render(category, True, white)
-        screen.blit(category_disp, (177, 130))
+        rendered, rectangle = write(category, "aquamarine4")
+        screen.blit(rendered, rectangle)
 
     if running == True:
-        word_font = py.font.Font("freesansbold.ttf", 35)
-        word_disp = word_font.render(current_word, True, white)
-        screen.blit(word_disp, (177, 130))
+        rendered, rectangle = write(current_word, "aquamarine3")
+        screen.blit(rendered, rectangle)
 
 
               
@@ -157,8 +166,8 @@ while game_on:
     
     
     ### Uncomment for testing
-    if not handle_events():
-        break
+    # if not handle_events():
+    #     break
             
     py.display.update()
 
