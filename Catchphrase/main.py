@@ -29,7 +29,7 @@ def create_connection(db_file):
         ### Connection for testing
         # connection = sqlite3.connect("Catchphrase/" + db_file)
         ### Connection for PI
-        connection = sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file)
+        connection = sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file, check_same_thread=False)
     except:
         print("Failed to connect")
 
