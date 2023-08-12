@@ -91,25 +91,25 @@ def main():
 
     """
 
-    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/CAH2.txt", "r")
+    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/misc.txt", "r")
     x = file1.read()
-    words = extract_terms(x)
+    words = extract_by_commas(x)
 
 
 
     
     
-    # connection = create_connection(database_name)
+    connection = create_connection(database_name)
 
 
-    # # ### call insert_word for each term
-    # for i in range(len(words)):
-    #     insert_word(connection, category_name, words[i])
+    # ### call insert_word for each term
+    for i in range(len(words)):
+        insert_word(connection, category_name, words[i])
 
 
-    # ### Close connection
-    # if connection:
-    #     connection.close()
+    ### Close connection
+    if connection:
+        connection.close()
 
 
 
