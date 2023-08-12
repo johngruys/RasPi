@@ -22,6 +22,18 @@ def extract_terms(str):
         
     return terms
 
+### For lists seperated by commas
+def extract_by_commas(str):
+    terms = []
+    split = str.split(",")
+    for word in split:
+        tmp = word.strip()
+        if tmp:
+            terms.append(tmp)
+    
+    return terms
+
+
 
 
 
@@ -71,7 +83,7 @@ def insert_word(connection, category, word):
 
 def main():
     database_name = "first_database.db"
-    category_name = "Celebrities"
+    category_name = "CardsAgainstHumanity"
     
     ### For data scraped from quizlet
     str = """
@@ -79,21 +91,25 @@ def main():
 
     """
 
-    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/Celebrities.txt", "r")
+    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/CAH2.txt", "r")
     x = file1.read()
     words = extract_terms(x)
+
+
+
     
-    connection = create_connection(database_name)
+    
+    # connection = create_connection(database_name)
 
 
-    # ### call insert_word for each term
-    for i in range(len(words)):
-        insert_word(connection, category_name, words[i])
+    # # ### call insert_word for each term
+    # for i in range(len(words)):
+    #     insert_word(connection, category_name, words[i])
 
 
-    ### Close connection
-    if connection:
-        connection.close()
+    # ### Close connection
+    # if connection:
+    #     connection.close()
 
 
 
