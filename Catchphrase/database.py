@@ -83,7 +83,7 @@ def insert_word(connection, category, word):
 
 def main():
     database_name = "first_database.db"
-    category_name = "CardsAgainstHumanity"
+    category_name = "Celebrities"
     
     ### For data scraped from quizlet
     str = """
@@ -91,8 +91,13 @@ def main():
 
     """
 
-    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/misc.txt", "r")
+    file1 = open(r"C:\Users\deang\OneDrive\Desktop\Catchphrase Cats/smin.txt", "r")
     x = file1.read()
+
+    ### Quizlet Format
+    # words = extract_terms(x)
+
+    ### Words by commas
     words = extract_by_commas(x)
 
 
