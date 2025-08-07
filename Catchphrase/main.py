@@ -176,7 +176,6 @@ def update_timer():
 def handle_events():
     for event in py.event.get():
         if event.type == py.QUIT:
-            game_on = False
             return False
 
         if event.type == py.KEYDOWN:
@@ -189,7 +188,6 @@ def handle_events():
                 
             # Esc to end game
             elif event.key == py.K_ESCAPE:
-                game_on = False
                 return False
     return True
     
@@ -217,9 +215,9 @@ while game_on:
 
     if selecting == True:
         category = categories[current_cat]
-        rendered, rectangle = write(category, "darkgreen")
+        rendered, rectangle = write(category, "blue4")
         screen.blit(rendered, rectangle)
-        update_timer()
+        
 
     if running == True:
         rendered, rectangle = write(current_word, "aquamarine3")
