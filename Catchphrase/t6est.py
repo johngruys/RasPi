@@ -2,7 +2,7 @@ import pygame as py
 import sqlite3
 import random
 import time
-# from gpiozero import Button
+from gpiozero import Button
 
 class DatabaseManager:
     def __init__(self, db_file):
@@ -13,9 +13,9 @@ class DatabaseManager:
     def create_connection(self, db_file):
         try:
             # Connection for testing
-            return sqlite3.connect("Catchphrase/" + db_file)
+            # return sqlite3.connect("Catchphrase/" + db_file)
             # Connection for PI
-            # return sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file, check_same_thread=False)
+            return sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file, check_same_thread=False)
         except Exception as e:
             print(f"Failed to connect: {e}")
             return None
@@ -112,7 +112,7 @@ class CatchphraseGame:
         self.current_word_index = -1
         self.num_words = 0
         self.game_on = True
-        # self.setup_gpio()
+        self.setup_gpio()
 
     def setup_gpio(self):
         # GPIO setup for Raspberry Pi
