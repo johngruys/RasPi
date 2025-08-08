@@ -2,7 +2,7 @@ import pygame as py
 import sqlite3
 import random
 import time
-# from gpiozero import Button
+from gpiozero import Button
 
 ### Initialize
 py.init()
@@ -30,10 +30,10 @@ def create_connection(db_file):
     connection = None
     try:
         ### Connection for testing
-        connection = sqlite3.connect("Catchphrase/" + db_file)
+        # connection = sqlite3.connect("Catchphrase/" + db_file)
         
         ### Connection for PI
-        # connection = sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file, check_same_thread=False)
+        connection = sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file, check_same_thread=False)
     except:
         print("Failed to connect")
 
@@ -194,17 +194,17 @@ def handle_events():
 
 ### Event Handling for PI (Uncomment on PI)
 
-# ss = Button(20)
-# ss.when_pressed = start_stop
-# ss.when_released = start_stop
+ss = Button(20)
+ss.when_pressed = start_stop
+ss.when_released = start_stop
 
-# cat = Button(26)
-# cat.when_pressed = next_cat
-# cat.when_released = next_cat
+cat = Button(26)
+cat.when_pressed = next_cat
+cat.when_released = next_cat
 
-# ne = Button(12)
-# ne.when_pressed = skip
-# ne.when_released = skip
+ne = Button(12)
+ne.when_pressed = skip
+ne.when_released = skip
 
 
 while game_on:
