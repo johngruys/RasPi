@@ -15,7 +15,7 @@ class DatabaseManager:
             # Connection for testing
             # return sqlite3.connect("Catchphrase/" + db_file)
             # Connection for PI
-            return sqlite3.connect("/home/johngruys/RasPi/Catchphrase/" + db_file, check_same_thread=False)
+            return sqlite3.connect("/home/john/RasPi/Catchphrase/" + db_file, check_same_thread=False)
         except Exception as e:
             print(f"Failed to connect: {e}")
             return None
