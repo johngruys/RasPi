@@ -112,6 +112,8 @@ class CatchphraseGame:
         self.current_word_index = -1
         self.num_words = 0
         self.game_on = True
+        
+        ### Uncomment on Pi ###
         self.setup_gpio()
 
     def setup_gpio(self):
