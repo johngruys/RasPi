@@ -91,7 +91,8 @@ class Timer:
 class CatchphraseGame:
     def __init__(self):
         py.init()
-        self.screen = py.display.set_mode((120, 120), py.FULLSCREEN)
+        self.screen = py.display.set_mode((0, 0), py.FULLSCREEN)
+        py.mouse.set_visible(False)
         py.display.set_caption("Catchphrase 2.0")
         self.width = self.screen.get_width()
         self.height = self.screen.get_height()
